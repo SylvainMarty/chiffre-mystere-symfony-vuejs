@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ChiffreMystereController extends Controller
 {
@@ -26,11 +25,11 @@ class ChiffreMystereController extends Controller
 
     /**
      * @Route("/essai", name="try")
-     * @Method({"POST"})
+     * @Method({"POST","OPTIONS"})
      *
      * @return JsonResponse
      */
-    public function trouverChiffreMystere(Request $request, SessionInterface $session)
+    public function trouverChiffreMystere(Request $request)
     {
         // On récupère le contenu du body
         $body = json_decode($request->getContent(), true);

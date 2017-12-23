@@ -4,7 +4,6 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\ChiffreMystereResponse;
 use AppBundle\Entity\ProximiteEnum;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ChiffreMystereService
@@ -12,14 +11,12 @@ class ChiffreMystereService
     const CHIFFRE_MYSTERE_CLE = 'chiffre_mystere';
     const NB_TENTATIVES_CLE = 'nb_tentatives';
 
-    private $logger;
     private $session;
     private $chiffreMystere;
     private $nbTentatives;
 
-    public function __construct(LoggerInterface $logger, SessionInterface $session)
+    public function __construct(SessionInterface $session)
     {
-        $this->logger = $logger;
         $this->session = $session;
         $this->chiffreMystere = $this->fetchChiffreMystere();
         $this->nbTentatives = $this->fetchNbTentatives();
