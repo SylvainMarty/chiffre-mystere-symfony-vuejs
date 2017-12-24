@@ -59,3 +59,5 @@ yarn dev
 cd ./front
 npm run dev
 ```
+
+Vous pouvez ensuite accéder au front à l'adresse http://localhost:8080/.
