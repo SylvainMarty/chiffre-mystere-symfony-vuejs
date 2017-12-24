@@ -3924,6 +3924,12 @@
       "resolved": "https://registry.npmjs.org/lodash.memoize/-/lodash.memoize-4.1.2.tgz",
       "dev": true
     },
+    "lodash.merge": {
+      "version": "4.6.0",
+      "from": "lodash.merge@>=4.6.0 <5.0.0",
+      "resolved": "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.0.tgz",
+      "dev": true
+    },
     "lodash.uniq": {
       "version": "4.5.0",
       "from": "lodash.uniq@>=4.5.0 <5.0.0",
@@ -7337,6 +7343,18 @@
       "version": "1.6.0",
       "from": "vue-template-es2015-compiler@>=1.6.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz",
+      "dev": true
+    },
+    "vuex": {
+      "version": "3.0.1",
+      "from": "vuex@latest",
+      "resolved": "https://registry.npmjs.org/vuex/-/vuex-3.0.1.tgz",
+      "dev": true
+    },
+    "vuex-persist": {
+      "version": "1.1.0",
+      "from": "vuex-persist@latest",
+      "resolved": "https://registry.npmjs.org/vuex-persist/-/vuex-persist-1.1.0.tgz",
       "dev": true
     },
     "watchpack": {

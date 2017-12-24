@@ -10,10 +10,17 @@
       <input type="submit" value="Envoyer"/>
       <p v-if="message">{{ message }}</p>
     </form>
+    <ul>
+      <li v-for="(tried,index) in timeline" :key="index">
+        n°{{ tried.nbTentatives }} : {{ tried.supposition }} ({{ tried.proximite }})
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters } from 'vuex';
+
 export default {
   name: 'ChiffreMystere',
   data() {
@@ -22,7 +29,19 @@ export default {
       message: null,
     };
   },
+  computed: {
+    ...mapState('ChiffreMystere', [
+      'timeline',
+    ]),
+    ...mapGetters('ChiffreMystere', [
+      'lastSupposition',
+    ]),
+  },
   methods: {
+    ...mapActions('ChiffreMystere', [
+      'submitToAPI',
+      'clearTimeline',
+    ]),
     up() {
       if (this.supposition !== null) {
         this.supposition = parseInt(this.supposition, 10) + 1;
@@ -45,34 +64,31 @@ export default {
         this.message = 'La supposition ne peut pas être supérieure à 100.';
         return;
       }
-      /* eslint-disable no-console */
-      this.$http.post('essai', { supposition: parseInt(this.supposition, 10) }).then((response) => {
-        const body = response.body;
-        console.debug('body', body);
-        switch (body.proximite) {
-          case '+':
-            this.message = `La supposition ${body.supposition} est trop faible.`;
-            break;
-          case '-':
-            this.message = `La supposition ${body.supposition} est trop élevée.`;
-            break;
-          case '=':
-            this.message = `
-            Bien joué, vous avez trouvé le chiffre mystère au bout de ${body.nbTentatives} tentatives !\n
-            Il s'agissait du chiffre ${body.supposition}
-            `;
-            break;
-          default:break;
-        }
-      }, (response) => {
-        this.message = `Une erreur est survenue : ${response.statusText} (code ${response.status})`;
-      });
-      /* eslint-enable no-console */
+      this.submitToAPI(this.supposition);
+    },
+  },
+  watch: {
+    lastSupposition(newValue) {
+      if (newValue === undefined) {
+        return;
+      }
+      switch (newValue.proximite) {
+        case '+':
+          this.message = `La supposition ${newValue.supposition} est trop faible.`;
+          break;
+        case '-':
+          this.message = `La supposition ${newValue.supposition} est trop élevée.`;
+          break;
+        case '=':
+          this.message = `
+          Bien joué, vous avez trouvé le chiffre mystère au bout de ${newValue.nbTentatives} tentatives !\n
+          Il s'agissait du chiffre ${newValue.supposition}
+          `;
+          this.clearTimeline();
+          break;
+        default:break;
+      }
     },
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
