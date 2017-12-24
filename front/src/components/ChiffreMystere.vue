@@ -11,7 +11,7 @@
       <p v-if="message">{{ message }}</p>
     </form>
     <ul>
-      <li v-for="(tried,index) in timeline" :key="index">
+      <li v-for="(tried,index) in history" :key="index">
         n°{{ tried.nbTentatives }} : {{ tried.supposition }} ({{ tried.proximite }})
       </li>
     </ul>
@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     ...mapState('ChiffreMystere', [
-      'timeline',
+      'history',
     ]),
     ...mapGetters('ChiffreMystere', [
       'lastSupposition',
@@ -40,7 +40,7 @@ export default {
   methods: {
     ...mapActions('ChiffreMystere', [
       'submitToAPI',
-      'clearTimeline',
+      'clearHistory',
     ]),
     up() {
       if (this.supposition !== null) {
@@ -82,9 +82,9 @@ export default {
         case '=':
           this.message = `
           Bien joué, vous avez trouvé le chiffre mystère au bout de ${newValue.nbTentatives} tentatives !\n
-          Il s'agissait du chiffre ${newValue.supposition}
+          Il s'agissait du chiffre ${newValue.supposition}.
           `;
-          this.clearTimeline();
+          this.clearHistory();
           break;
         default:break;
       }
@@ -92,3 +92,30 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+ul {
+  list-style-type: none;
+  width: 200px;
+  margin: 20px auto 0;
+  padding: 0;
+}
+
+ul li {
+  line-height: 40px;
+  border-left: 2px solid #333;
+  position: relative;
+  text-align: left;
+  padding-left: 40px;
+}
+
+ul li:before {
+  content: "";
+  background-color: #333;
+  width: 30px;
+  height: 2px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+}
+</style>

@@ -5,45 +5,43 @@ import Vue from 'vue';
  */
 
 const state = {
-  timeline: [],
+  history: [],
 };
 
 const getters = {
   lastSupposition(st) {
-    if (st.timeline === undefined) {
+    if (st.history === undefined) {
       return null;
     }
-    return st.timeline[st.timeline.length - 1];
+    return st.history[st.history.length - 1];
   },
 };
 
 const mutations = {
-  UPDATE_TIMELINE(st, responseBody) {
-    if (st.timeline === undefined) {
-      st.timeline = [];
+  UPDATE_HISTORY(st, responseBody) {
+    if (st.history === undefined) {
+      st.history = [];
     }
-    st.timeline.push(responseBody);
+    st.history.push(responseBody);
   },
-  CLEAR_TIMELINE(st) {
-    st.timeline = [];
+  CLEAR_HISTORY(st) {
+    st.history = [];
   },
 };
 
 const actions = {
-  /* eslint-disable no-console */
   submitToAPI({ commit }, supposition) {
     Vue.http.post('essai', { supposition: parseInt(supposition, 10) }).then((response) => {
-      commit('UPDATE_TIMELINE', response.body);
+      commit('UPDATE_HISTORY', response.body);
     }, (response) => {
       // eslint-disable-next-line
       console.warn(`Une erreur est survenue : ${response.statusText} (code ${response.status})`);
     });
   },
-  clearTimeline({ commit }) {
-    commit('CLEAR_TIMELINE');
+  clearHistory({ commit }) {
+    commit('CLEAR_HISTORY');
   },
 };
-
 
 export default {
   namespaced: true,
