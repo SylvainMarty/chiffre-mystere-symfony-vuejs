@@ -17,6 +17,8 @@ composer install
 
 ### Run
 
+Le port **8000** de votre machine doit être disponible.
+
 ```sh
 cd ./api
 php bin/console server:run
@@ -43,6 +45,8 @@ npm install
 ```
 
 ### Run
+
+Le port **8080** de votre machine doit être disponible.
 
 #### Avec Yarn
 ```sh
