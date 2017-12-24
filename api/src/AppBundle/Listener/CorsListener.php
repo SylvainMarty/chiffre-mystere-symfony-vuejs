@@ -49,7 +49,7 @@ class CorsListener implements EventSubscriberInterface
         $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:8080');
         $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
         $response->headers->set('Access-Control-Allow-Headers', 'content-type');
-        // Permet de dire au client (browser) de stocker le cookie lors d'un appel ajax
+        // Permet de dire au client (browser) de stocker le cookie automatiquement lors d'un appel ajax
         $response->headers->set('Access-Control-Allow-Credentials', 'true');
     }
 
