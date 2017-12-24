@@ -1,17 +1,63 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <ChiffreMystere/>
+    <p>
+      Choisissez un chiffre entre 0 et 100
+    </p>
+    <Form/>
+    <p v-if="message">{{ message }}</p>
+    <Timeline/>
   </div>
 </template>
 
 <script>
-import ChiffreMystere from './components/ChiffreMystere';
+import { mapGetters, mapActions } from 'vuex';
+import Form from './components/Form';
+import Timeline from './components/Timeline';
 
 export default {
-  name: 'app',
+  name: 'ChiffreMystere',
+  data() {
+    return {
+      message: null,
+    };
+  },
+  computed: {
+    ...mapGetters('ChiffreMystere', [
+      'lastSupposition',
+    ]),
+  },
+  methods: {
+    ...mapActions('ChiffreMystere', [
+      'clearHistory',
+    ]),
+  },
+  watch: {
+    lastSupposition(newValue) {
+      if (newValue === undefined) {
+        return;
+      }
+      switch (newValue.proximite) {
+        case '+':
+          this.message = `La supposition ${newValue.supposition} est trop faible.`;
+          break;
+        case '-':
+          this.message = `La supposition ${newValue.supposition} est trop élevée.`;
+          break;
+        case '=':
+          this.message = `
+          Bien joué, vous avez trouvé le chiffre mystère au bout de ${newValue.nbTentatives} tentatives !\n
+          Il s'agissait du chiffre ${newValue.supposition}.
+          `;
+          this.clearHistory();
+          break;
+        default:break;
+      }
+    },
+  },
   components: {
-    ChiffreMystere,
+    Form,
+    Timeline,
   },
 };
 </script>
